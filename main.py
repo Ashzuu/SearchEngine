@@ -1,4 +1,3 @@
-from data.InitializerData import InitializerData
+from Api import Api
 
-initialz = InitializerData()
-print(list(initialz.dataReddit))
+api = Api().api
