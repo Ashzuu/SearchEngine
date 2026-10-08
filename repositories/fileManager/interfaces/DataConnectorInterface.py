@@ -10,5 +10,5 @@ class DataConnectorInterface(ABC):
         """Read data from a datasource"""
 
     @abstractmethod
-    def write(self, data:list):
+    def write(self, data: list) -> None:
         """Persists data to a datasource"""

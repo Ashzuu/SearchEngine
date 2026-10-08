@@ -2,6 +2,7 @@ import praw
 import pandas as pd
 import requests
 import xmltodict
+import json
 from repositories.fileManager.CsvDataConnector import CsvDataConnector
 
 class InitializerData:
@@ -18,21 +19,21 @@ class InitializerData:
     __writer: CsvDataConnector = CsvDataConnector()
 
     @property
-    def dataReddit(self):
+    def dataReddit(self)->list:
         """
         Get data of reddit extracted on initialization.
         """
         return self.__dataReddit
 
     @property
-    def dataArvix(self):
+    def dataArvix(self)->list:
         """
         Get data of arvix extracted on initialization.
         :return:
         """
         return self.__dataArvix
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize of data if data.csv is empty.
         """
@@ -43,7 +44,7 @@ class InitializerData:
         except (FileNotFoundError, pd.errors.EmptyDataError):
             self.__initialize_and_save()
 
-    def __initialize_and_save(self):
+    def __initialize_and_save(self)->None:
         self.__initRedditData()
         self.__initArvixData()
         
@@ -60,20 +61,24 @@ class InitializerData:
             client_secret="ynb_xt5pKo4IFhssuuqr5ENTMu5Q4g",
             user_agent="Evan_M1",
         )
-        redditClientThemed:list = redditClient.subreddit(self.__THEME_REDDIT)
-        listOfPosts:list = list(redditClientThemed.hot(limit=self.__LIMIT))
+        redditClientThemed = redditClient.subreddit(self.__THEME_REDDIT)
+        listOfPosts = list(redditClientThemed.hot(limit=self.__LIMIT))
         for post in listOfPosts:
-            # Instead of that, use a factory to make reddit post instead of writing hand.
             text: str = ""
-            text+=post.title.replace("\n", " ") + ". "
+            text += post.title.replace("\\n", " ") + ". "
             if post.selftext:
-                text += post.selftext.replace("\n", " ")
+                text += post.selftext.replace("\\n", " ")
             elif post.url:
                 text += post.url
 
             data = {
                 'id': len(self.__dataReddit),
+                'title': post.title.replace('\\n', ' '),
+                'author': str(post.author) if post.author else "Unknown",
+                'date': str(post.created_utc),
+                'url': post.url,
                 'text': text,
+                'comments': post.num_comments,
                 'origin': 'reddit'
             }
 
@@ -92,13 +97,26 @@ class InitializerData:
                 if not isinstance(entries, list):
                     entries = [entries]
                 for entry in entries:
-                    title = entry.get('title', '').replace('\n', ' ')
-                    summary = entry.get('summary', '').replace('\n', ' ')
+                    title = entry.get('title', '').replace('\\n', ' ')
+                    summary = entry.get('summary', '').replace('\\n', ' ')
                     text = f"{title}. {summary}"
+                    
+                    authors_list = entry.get('author', [])
+                    if not isinstance(authors_list, list):
+                        authors_list = [authors_list]
+                    
+                    author_names = [author.get('name', 'Unknown') for author in authors_list]
+                    main_author = author_names[0] if author_names else "Unknown"
+                    coauthors = author_names[1:] if len(author_names) > 1 else []
                     
                     doc = {
                         'id': len(self.__dataReddit) + len(self.__dataArvix),
+                        'title': title,
+                        'author': main_author,
+                        'date': entry.get('published', ''),
+                        'url': entry.get('id', ''),
                         'text': text,
+                        'coauthors': json.dumps(coauthors),
                         'origin': 'arxiv'
                     }
                     self.__dataArvix.append(doc)

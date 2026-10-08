@@ -7,10 +7,10 @@ class SearchEngine:
     """
     _initializr:InitializerData = InitializerData()
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._initializr = InitializerData()
 
-    def search(self, query: str):
+    def search(self, query: str) -> list:
         """
         Perform a search query.
         :param query: The query to search.
