@@ -1,48 +1,43 @@
 from fastapi import FastAPI
-import json
-
 from controllers.SearchEngineController import SearchEngineController
 from services.factories.DocumentFactory import DocumentFactory
 from services.helpers.Singleton import singleton
 from data.InitializerData import InitializerData
 from repositories.fileManager.CsvDataConnector import CsvDataConnector
 from models.Corpus import Corpus
-from models.document.RedditDocument import RedditDocument
-from models.document.ArvixDocument import ArvixDocument
 
 
 @singleton
 class Api:
     """
-    Main class for the API.
-    Is a singleton because we must have only one instance of the API.
+    Application principale de l'API.
     """
-    _api: FastAPI
-    _controllers:list = []
+    def __init__(self) -> None:
+        self._api = FastAPI(title="Search Engine")
+        self._controllers = []
+
+        # Initialisation des donnees
+        InitializerData()
+        connector = CsvDataConnector()
+        donnees = connector.read()
+
+        # Remplissage du corpus
+        corpus = Corpus()
+        for ligne in donnees:
+            document = DocumentFactory.create(ligne)
+            corpus.add_document(document)
+
+        print(corpus)
+
+        # Enregistrement des controleurs
+        controller = SearchEngineController()
+        self._controllers.append(controller)
+        router = controller.get_router()
+        self._api.include_router(router)
 
     @property
     def api(self) -> FastAPI:
         """
-        Get the API reference of the object to construct it in the client
-        :return: The reference of the API built.
+        Retourne l'instance FastAPI.
         """
         return self._api
-
-    def __init__(self) -> None:
-        """
-        Constructor for the API.
-        """
-        self._api = FastAPI(title="Search Engine")
-        
-        InitializerData()
-        corpus = Corpus()
-        cached_data = CsvDataConnector().read()
-        for row in cached_data:
-            doc = DocumentFactory.create(row)
-            corpus.add_document(doc)
-
-        print(corpus)
-                
-        self._controllers.append(SearchEngineController())
-        for controller in self._controllers:
-            self._api.include_router(controller.get_router())
