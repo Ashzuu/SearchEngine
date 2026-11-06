@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Query
 from controllers.interface.IController import IController
+from models.api.SearchResultDTO import SearchResult
 from services.SearchEngine import SearchEngine
 
 
@@ -24,7 +25,7 @@ class SearchEngineController(IController):
         self,
         query: str = Query(..., description="Mots cles a rechercher"),
         top_n: int = Query(10, description="Nombre de resultats", ge=1)
-    ) -> dict:
+    ) -> SearchResult:
         """
         Recherche vectorielle par similarite cosinus.
         """
@@ -32,18 +33,15 @@ class SearchEngineController(IController):
         resultats_liste = df_resultats.to_dict(orient="records")
         total_trouves = len(resultats_liste)
 
-        reponse = {
-            "query": query,
-            "count": total_trouves,
-            "results": resultats_liste
-        }
+        reponse = SearchResult(query, total_trouves, resultats_liste)
+
         return reponse
 
     async def concorde(
         self,
         expression: str = Query(..., description="Expression pour le concordancier"),
         context_size: int = Query(30, description="Taille du contexte", ge=1)
-    ) -> dict:
+    ) -> SearchResult:
         """
         Recherche via un concordancier.
         """
@@ -51,11 +49,8 @@ class SearchEngineController(IController):
         lignes = df_concorde.to_dict(orient="records")
         total_lignes = len(lignes)
 
-        reponse = {
-            "expression": expression,
-            "count": total_lignes,
-            "results": lignes
-        }
+        reponse = SearchResult(expression, total_lignes, lignes)
+
         return reponse
 
     async def stats(

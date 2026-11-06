@@ -75,7 +75,7 @@ class InitializerData:
                 'id': len(self.__dataReddit),
                 'title': post.title.replace('\\n', ' '),
                 'author': str(post.author) if post.author else "Unknown",
-                'date': str(post.created_utc),
+                'date': str(int(post.created_utc)),
                 'url': post.url,
                 'text': text,
                 'comments': post.num_comments,
