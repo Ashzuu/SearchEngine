@@ -17,12 +17,10 @@ class Api:
         self._api = FastAPI(title="Search Engine")
         self._controllers = []
 
-        # Initialisation des donnees
         InitializerData()
         connector = CsvDataConnector()
         donnees = connector.read()
 
-        # Remplissage du corpus
         corpus = Corpus()
         for ligne in donnees:
             document = DocumentFactory.create(ligne)
@@ -30,7 +28,6 @@ class Api:
 
         print(corpus)
 
-        # Enregistrement des controleurs
         controller = SearchEngineController()
         self._controllers.append(controller)
         router = controller.get_router()

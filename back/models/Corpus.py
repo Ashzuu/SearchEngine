@@ -19,7 +19,6 @@ class Corpus:
         self.nb_docs: int = 0
         self.authors: Dict[str, Author] = {}
 
-        # Caches
         self._texte_concat: Optional[str] = None
         self._vocab: Optional[Dict[str, dict]] = None
         self._freq: Optional[pd.DataFrame] = None
@@ -34,14 +33,12 @@ class Corpus:
         self.documents[doc_id] = doc
         self.nb_docs += 1
 
-        # Reinitialisation des caches
         self._texte_concat = None
         self._vocab = None
         self._freq = None
         self._mat_TF = None
         self._mat_TFxIDF = None
 
-        # Mise a jour des auteurs
         if hasattr(doc, "author") and doc.author:
             author_name = doc.author
             if author_name not in self.authors:
@@ -70,7 +67,6 @@ class Corpus:
         if not self.texte_concat:
             return []
 
-        # Construction du motif avec contexte
         motif = re.escape(keyword)
         pattern_str = rf".{{0,{context_size}}}{motif}.{{0,{context_size}}}"
         regex = re.compile(pattern_str, re.IGNORECASE)
@@ -125,7 +121,6 @@ class Corpus:
                     doc_freq[mot] = doc_freq.get(mot, 0) + 1
                     mots_uniques.add(mot)
 
-        # Tableau pandas des frequences
         serie_tf = pd.Series(term_freq)
         serie_df = pd.Series(doc_freq)
         freq_df = pd.DataFrame({
@@ -178,7 +173,6 @@ class Corpus:
         colonnes = []
         valeurs = []
 
-        # Construction des coordonnees de la matrice creuse
         for doc_id, doc in self.documents.items():
             texte_brut = getattr(doc, "text", "")
             texte_propre = nettoyer_texte(texte_brut)
@@ -195,12 +189,10 @@ class Corpus:
                     colonnes.append(col_id)
                     valeurs.append(compte)
 
-        # Matrice TF
         taille = (nb_documents, nb_mots)
         coordonnees = (valeurs, (lignes, colonnes))
         self._mat_TF = csr_matrix(coordonnees, shape=taille, dtype=float)
 
-        # Calcul du vecteur IDF
         vecteur_idf = np.zeros(nb_mots)
         for mot, infos in vocabulaire.items():
             col_id = infos["id"]
@@ -208,7 +200,6 @@ class Corpus:
             calcul_idf = np.log((1.0 + nb_documents) / (1.0 + df)) + 1.0
             vecteur_idf[col_id] = calcul_idf
 
-        # Matrice TF-IDF
         self._mat_TFxIDF = self._mat_TF.multiply(vecteur_idf).tocsr()
 
     @property

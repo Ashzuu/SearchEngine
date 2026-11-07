@@ -34,7 +34,6 @@ class SearchEngine:
         nb_docs = self.corpus.nb_docs
         taille_vocab = len(self.vocab)
 
-        # Calcul du vecteur IDF
         self.idf = np.zeros(taille_vocab)
         for mot, infos in self.vocab.items():
             col_id = infos["id"]
@@ -42,7 +41,6 @@ class SearchEngine:
             calcul_idf = np.log((1.0 + nb_docs) / (1.0 + df)) + 1.0
             self.idf[col_id] = calcul_idf
 
-        # Normes L2 de chaque document
         carres = self.mat_TFxIDF.power(2)
         sommes = carres.sum(axis=1)
         self.doc_norms = np.sqrt(sommes).A1
@@ -51,7 +49,7 @@ class SearchEngine:
         """
         Recherche les documents les plus pertinents pour une requete.
         """
-        colonnes = ["id", "score", "titre", "origine", "auteur", "date", "texte"]
+        colonnes = ["id", "score", "titre", "origine", "url" , "auteur", "date", "texte"]
 
         if not query:
             return pd.DataFrame(columns=colonnes)
@@ -62,7 +60,6 @@ class SearchEngine:
         if not mots_requete:
             return pd.DataFrame(columns=colonnes)
 
-        # Construction du vecteur de requete
         taille_vocab = len(self.vocab)
         vecteur_requete = np.zeros(taille_vocab)
 
@@ -72,12 +69,10 @@ class SearchEngine:
                 valeur_idf = self.idf[col_id]
                 vecteur_requete[col_id] += 1.0 * valeur_idf
 
-        # Norme du vecteur de requete
         norme_requete = np.linalg.norm(vecteur_requete)
         if norme_requete == 0.0:
             return pd.DataFrame(columns=colonnes)
 
-        # Produit scalaire et similarite cosinus
         produit_scalaire = self.mat_TFxIDF.dot(vecteur_requete)
         normes_combinees = self.doc_norms * norme_requete
 
@@ -86,7 +81,6 @@ class SearchEngine:
         masque = normes_combinees > 0
         scores[masque] = produit_scalaire[masque] / normes_combinees[masque]
 
-        # Tri des meilleurs scores
         indices_tries = np.argsort(scores)
         indices_decroissants = indices_tries[::-1]
         meilleurs_indices = indices_decroissants[:top_n]
@@ -96,7 +90,6 @@ class SearchEngine:
             score_brut = scores[idx]
             score_arrondi = round(float(score_brut), 4)
 
-            # Si le score est nul, on peut ignorer
             if score_arrondi <= 0:
                 continue
 
@@ -107,6 +100,7 @@ class SearchEngine:
                 morceaux = texte.split(". ")
                 titre = morceaux[0][:100]
 
+            url = getattr(doc, "url", "")
             auteur = getattr(doc, "author", "")
             date = getattr(doc, "date", "")
             origine = "inconnu"
@@ -118,6 +112,7 @@ class SearchEngine:
                 "score": score_arrondi,
                 "titre": titre,
                 "origine": origine,
+                "url": url,
                 "auteur": auteur,
                 "date": date,
                 "texte": texte

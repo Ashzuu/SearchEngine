@@ -37,22 +37,6 @@ class SearchEngineController(IController):
 
         return reponse
 
-    async def concorde(
-        self,
-        expression: str = Query(..., description="Expression pour le concordancier"),
-        context_size: int = Query(30, description="Taille du contexte", ge=1)
-    ) -> SearchResult:
-        """
-        Recherche via un concordancier.
-        """
-        df_concorde = self._search_engine.concorde(expression, context_size=context_size)
-        lignes = df_concorde.to_dict(orient="records")
-        total_lignes = len(lignes)
-
-        reponse = SearchResult(expression, total_lignes, lignes)
-
-        return reponse
-
     async def stats(
         self,
         n: int = Query(10, description="Nombre de mots les plus frequents", ge=1)
@@ -76,5 +60,4 @@ class SearchEngineController(IController):
         Enregistre les routes de l'API.
         """
         self._router.add_api_route("/search", self.search, methods=["GET"])
-        self._router.add_api_route("/concorde", self.concorde, methods=["GET"])
         self._router.add_api_route("/stats", self.stats, methods=["GET"])

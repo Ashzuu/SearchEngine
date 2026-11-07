@@ -1,0 +1,48 @@
+\xpg@aux {}{french}
+\contentsline {section}{\numberline {1}Les spécifications}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Contexte et problématique}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Accès au projet}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Spécifications fonctionnelles}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Spécifications non-fonctionnelles}{5}{subsection.1.4}%
+\contentsline {section}{\numberline {2}L'analyse}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Environnement de travail retenu}{6}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Back-end : Python 3 et FastAPI}{6}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Front-end : Angular}{6}{subsubsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.2}Architecture de classes}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Organisation détaillée du front-end}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Justification des choix technologiques et architecturaux}{8}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Pourquoi le patron Singleton ?}{8}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Pourquoi le patron Factory Method (\texttt {DocumentFactory}) ?}{8}{subsubsection.2.4.2}%
+\contentsline {subsubsection}{\numberline {2.4.3}Patron Repository et interface \texttt {DataConnectorInterface} ?}{8}{subsubsection.2.4.3}%
+\contentsline {subsubsection}{\numberline {2.4.4}Pourquoi les Data Transfer Objects (DTO) ?}{8}{subsubsection.2.4.4}%
+\contentsline {subsection}{\numberline {2.5}Algorithmes spécifiques à l'application}{9}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Nettoyage et normalisation textuelle}{9}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Construction du vocabulaire et calcul des fréquences}{9}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Schéma de pondération TF-IDF}{9}{subsubsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.6}Problèmes rencontrés et solutions apportées}{10}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Exemple commenté d'utilisation du programme}{11}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Étapes de réflexion et de réalisation}{13}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Fondations orientées objet et collecte multi-sources (Branche part-1)}{13}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}10 et 15 septembre 2026}{13}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}17 septembre 2026}{13}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}07 octobre 2026}{13}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}08 octobre 2026}{13}{subsubsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.2}Mathématisation vectorielle et moteur de recherche (Branche part-2)}{14}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}02 novembre 2026}{14}{subsubsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.3}Interface moderne Angular et refactorisation mono-repo}{15}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}06 novembre 2026}{15}{subsubsection.3.3.1}%
+\contentsline {section}{\numberline {4}La validation}{16}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Procédures de tests unitaires}{16}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Tests unitaires du back-end Python}{16}{subsubsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.2}Tests globaux via l'interface utilisateur}{17}{subsection.4.2}%
+\contentsline {section}{\numberline {5}La maintenance et les perspectives d'évolution}{18}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Évolutions fonctionnelles envisageables}{18}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Intégration de nouvelles sources documentaires (ex. HAL, Wikipedia)}{18}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}Filtrage multicritère (par date, source ou auteur)}{18}{subsubsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.3}Pagination des résultats}{18}{subsubsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.2}Amélioration de l'IHM}{18}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Évolutions techniques envisageables}{19}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}Ajout d'autres thèmes de recherche}{19}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}Remplacement de la méthode de stockage de données}{19}{subsubsection.5.3.2}%
+\contentsline {section}{\numberline {6}Utilisation de l'IA}{20}{section.6}%
+\contentsline {section}{\numberline {7}Conclusion}{21}{section.7}%
