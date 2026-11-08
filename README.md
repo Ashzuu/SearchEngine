@@ -46,6 +46,18 @@ Pour une exposition en mode développement (du moins pas en localhost), il suffi
 
 ``fastapi run main.py --port 8080`` (si on veut l'exposer, encore une fois, sur le port 8080)
 
+### Lancement des tests de l'API
+
+Pour lancer les différents tests unitaires de l'API, dans votre projet back, lancez :
+
+``python -m unittest discover tests -v``
+
+ou 
+
+``py -m unittest discover tests -v``
+
+
+Assurez-vous avant cela de bien avoir installer les dépendances du projet !
 ## Lancement du front (Angular)
 
 Pour lancer l'application web :
