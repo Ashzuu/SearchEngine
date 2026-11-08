@@ -89,30 +89,63 @@
   {\bfseries\normalsize}
   {\thesubsubsection}{1em}{}
 
+\definecolor{infobg}{HTML}{F0F7FD}
+\definecolor{infoborder}{HTML}{42A5F5}
+\definecolor{infotitle}{HTML}{0D47A1}
+\definecolor{warnbg}{HTML}{FFF8E1}
+\definecolor{warnborder}{HTML}{FFA000}
+\definecolor{warntitle}{HTML}{E65100}
+
+\newsavebox{\infoboxbox}
 \newenvironment{infobox}[1][]{%
-  \par\vspace{6pt}%
-  {\color{primaryblue!50}\rule{\linewidth}{1pt}}%
-  \nopagebreak\par\nopagebreak%
-  \noindent\begin{minipage}{\linewidth}%
+  \par\vspace{8pt}%
+  \noindent
+  \begin{lrbox}{\infoboxbox}%
+  \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule-10pt\relax}%
   \setlength{\parskip}{4pt}%
-  \if\relax\detokenize{#1}\relax\else\textbf{#1}\par\fi%
+  \if\relax\detokenize{#1}\relax%
+    {\color{infotitle}\bfseries\sffamily Information}\par\vspace{3pt}%
+  \else%
+    {\color{infotitle}\bfseries\sffamily #1}\par\vspace{3pt}%
+  \fi%
 }{%
-  \end{minipage}\par%
-  {\color{primaryblue!50}\rule{\linewidth}{1pt}}%
-  \par\vspace{6pt}%
+  \end{minipage}%
+  \end{lrbox}%
+  \setlength{\fboxrule}{1pt}%
+  \setlength{\fboxsep}{10pt}%
+  \fcolorbox{infoborder}{infobg}{%
+    \makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
+      \hspace{5pt}%
+      \usebox{\infoboxbox}%
+    }%
+  }%
+  \par\vspace{8pt}%
 }
 
+\newsavebox{\warnboxbox}
 \newenvironment{warnbox}[1][]{%
-  \par\vspace{6pt}%
-  {\color{orange!60}\rule{\linewidth}{1pt}}%
-  \nopagebreak\par\nopagebreak%
-  \noindent\begin{minipage}{\linewidth}%
+  \par\vspace{8pt}%
+  \noindent
+  \begin{lrbox}{\warnboxbox}%
+  \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule-10pt\relax}%
   \setlength{\parskip}{4pt}%
-  \if\relax\detokenize{#1}\relax\else\textbf{#1}\par\fi%
+  \if\relax\detokenize{#1}\relax%
+    {\color{warntitle}\bfseries\sffamily Attention}\par\vspace{3pt}%
+  \else%
+    {\color{warntitle}\bfseries\sffamily #1}\par\vspace{3pt}%
+  \fi%
 }{%
-  \end{minipage}\par%
-  {\color{orange!60}\rule{\linewidth}{1pt}}%
-  \par\vspace{6pt}%
+  \end{minipage}%
+  \end{lrbox}%
+  \setlength{\fboxrule}{1pt}%
+  \setlength{\fboxsep}{10pt}%
+  \fcolorbox{warnborder}{warnbg}{%
+    \makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
+      \hspace{5pt}%
+      \usebox{\warnboxbox}%
+    }%
+  }%
+  \par\vspace{8pt}%
 }
 
 \begin{document}
@@ -441,6 +474,15 @@ Les méthodes critiques du back-end ont fait l'objet de vérifications unitaires
     \item \textbf{Validation du calcul matriciel} : Vérification que la matrice TF-IDF produite a les bonnes dimensions et que ses éléments sont strictement non négatifs.
     \item \textbf{Validation interactive des endpoints FastAPI} : Utilisation de l'interface Swagger générée sur \url{http://localhost:8000/docs} pour éprouver les codes d'état HTTP et la conformité des schémas JSON retournés.
 \end{itemize}
+
+\begin{infobox}[Exécution de la suite de tests automatisés]
+Pour exécuter l'ensemble des tests unitaires du back-end, il suffit de lancer la commande suivante à la racine du dossier \texttt{back/} :
+\begin{center}
+\texttt{python -m unittest discover tests -v}
+\end{center}
+\end{infobox}
+
+
 
 \subsection{Tests globaux via l'interface utilisateur}
 
