@@ -175,7 +175,7 @@ En cas de problématique lié à l'accès du projet, vous pouvez me contacter vi
 
 Le cahier des charges du logiciel définit sept exigences fonctionnelles majeures :
 
-\begin{enumerate}[leftmargin=*, label=\textbf{SF\arabic*.}]
+\begin{enumerate}
     \item \textbf{Collecte multi-sources} : Extraire automatiquement des documents à partir d'au moins deux plateformes externes distinctes avec des volumétries représentatives. Pour ce projet, les deux sources ciblées sur la thématique du \textit{Machine Learning} sont :
         \begin{itemize}
             \item L'API Reddit, via le wrapper officiel \texttt{praw}, interrogeant le subreddit spécialisé \texttt{r/MachineLearning} ;
@@ -191,7 +191,7 @@ Le cahier des charges du logiciel définit sept exigences fonctionnelles majeure
 
 \subsection{Spécifications non-fonctionnelles}
 
-\begin{enumerate}[leftmargin=*, label=\textbf{SNF\arabic*.}]
+\begin{enumerate}
     \item \textbf{Efficacité spatiale et temporelle} : L'indexation vectorielle sur un vocabulaire comprenant des dizaines de milliers de termes ne doit pas saturer la mémoire vive. Le recours à des matrices creuses s'impose.
     \item \textbf{Modularité et patrons de conception} : Le code doit respecter les principes SOLID, en séparant la couche d'accès aux données (\textit{Repository}), la logique métier (\textit{Services}), la représentation (\textit{Models} et \textit{DTOs}) et l'exposition d'API (\textit{Controllers}).
     \item \textbf{Architecture découplée} : Le back-end et le front-end doivent fonctionner en processus indépendants, échangeant exclusivement par HTTP/JSON au moyen d'un contrat d'interface stable.
@@ -436,10 +436,10 @@ Implémentation complète de \texttt{SearchEngine} :
 \subsubsection{Tests unitaires du back-end Python}
 Les méthodes critiques du back-end ont fait l'objet de vérifications unitaires ciblées :
 \begin{itemize}
-    \item \textbf{Validation du nettoyage textuel (\texttt{TextCleaner})} : Vérification de la suppression des caractères accentués parasites, des tabulations, des retours chariot multiples et de la conservation stricte des mots-clés alphabétiques.
-    \item \textbf{Validation de la fabrique (\texttt{DocumentFactory})} : Contrôle de l'instanciation rigoureuse d'un \texttt{RedditDocument} lorsque \texttt{origin == "reddit"} et d'un \texttt{ArvixDocument} lorsque \texttt{origin == "arxiv"}, avec décodage correct des co-auteurs en tableau.
-    \item \textbf{Validation du calcul matriciel creux} : Vérification que la matrice TF-IDF produite a les bonnes dimensions et que ses éléments sont strictement non négatifs.
-    \item \textbf{Validation interactive des endpoints FastAPI} : Utilisation de l'interface Swagger générée sur \texttt{http://localhost:8000/docs} pour éprouver les codes d'état HTTP (200, 422 en cas de paramètre manquant) et la conformité des schémas JSON retournés.
+    \item \textbf{Validation du nettoyage textuel (\texttt{TextCleaner})} : Vérification de la suppression des caractères accentués parasites, des tabulations, des retours chariot multiples et de la conservation des mots-clés.
+    \item \textbf{Validation de la fabrique (\texttt{DocumentFactory})} : Contrôle de l'instanciation d'un \texttt{RedditDocument} lorsque \texttt{origin == "reddit"} et d'un \texttt{ArvixDocument} lorsque \texttt{origin == "arxiv"}.
+    \item \textbf{Validation du calcul matriciel} : Vérification que la matrice TF-IDF produite a les bonnes dimensions et que ses éléments sont strictement non négatifs.
+    \item \textbf{Validation interactive des endpoints FastAPI} : Utilisation de l'interface Swagger générée sur \url{http://localhost:8000/docs} pour éprouver les codes d'état HTTP et la conformité des schémas JSON retournés.
 \end{itemize}
 
 \subsection{Tests globaux via l'interface utilisateur}
@@ -525,6 +525,7 @@ Dans ce projet, l'IA a été utilisé pour les éléments suivants :
 	\item \textbf{Aide dans la mise en place architecturale de l'API en Python} : n'ayant jamais utilisé FastAPI comme librairie, mais souhaitant imposé une architecture maitrisée (Controllers -> Service -> Repository), l'IA m'a permis de mieux structurer mon code pour la suite.
 	\item \textbf{Aide à la mise en place du rapport :} Aide pour la récupération des différents tests / commits depuis le dépôt Git, et aide pour l'utilisation de LaTeX. N'ayant jamais utilisé également cette méthode de création de documents, et ayant connaissance qu'il sera utile dans d'autres matières ainsi que dans le monde de la recherche, celui-ci a permis de créer rapidement la structure du document.
 	\item \textbf{Vérification de la qualité du code} : Régulièrement durant le processus, je demandais à ce que l'IA vérifie la qualité afin que celle-ci ne se détériore pas trop.
+	\item \textbf{Lors d'un blocage après de multiples essais} : Lorsque le code ne fonctionnait pas, notamment dans les notions mathématiques, j'ai quelques fois demandé à l'IA d'analyser le code fait (qui ne marchait pas) et d'expliquer pourquoi cela ne fonctionne pas, que cela soit d'un point de vue code ou purement mathématiques. L'objectif n'étant pas de faire à ma place, mais de comprendre mes erreurs et de pouvoir les remédier.
 
 \end{enumerate}
 
