@@ -124,11 +124,11 @@ class Corpus:
         serie_tf = pd.Series(term_freq)
         serie_df = pd.Series(doc_freq)
         freq_df = pd.DataFrame({
-            "term frequency": serie_tf,
-            "document frequency": serie_df
+            "term_frequency": serie_tf,
+            "document_frequency": serie_df
         })
         freq_df.index.name = "mot"
-        freq_df = freq_df.sort_values(by="term frequency", ascending=False)
+        freq_df = freq_df.sort_values(by="term_frequency", ascending=False)
         self._freq = freq_df
 
         mots_tries = sorted(term_freq.keys())
