@@ -1,0 +1,51 @@
+.search-result-container {
+  padding: 10px;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: calc(100% - 20px);
+  font-size: 12px;
+  color: gray;
+
+  app-search-bar {
+    min-width: 50%;
+    max-width: 1000px;
+  }
+
+  .results {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+    overflow: auto;
+  }
+
+  .single-result {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 50%;
+    max-width: 1000px;
+    p {
+      margin: 0;
+    }
+    .title {
+      margin: 0;
+      font-weight: normal;
+      a {
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .author {
+      color: black;
+      font-size: 14px;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+.search-space {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .search-bar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
+  .search-icon {
+    cursor: pointer;
+    font-size: 22px;
+  }
+
+}

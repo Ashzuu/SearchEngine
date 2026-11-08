@@ -1,0 +1,41 @@
+
+<main>
+  @if(Result()){
+    <div class="stats-container">
+      <app-stat-card class="large-card"
+                     Title="Nombre de mots uniques">
+        {{Result()!.total_unique_words.toString()}}
+      </app-stat-card>
+    </div>
+  }
+
+  <div class="principal-section">
+    <h1>Votre moteur de recherche spécialisé IA !</h1>
+    <app-search-bar></app-search-bar>
+  </div>
+
+  @if(Result()){
+    <div class="stats-container">
+      <app-stat-card class="large-card"
+                     Title="Top 10 des mots les plus fréquents">
+        <table>
+          <thead>
+            <th>Mot</th>
+            <th>Fréquence du mot</th>
+            <th>Fréquence par document</th>
+          </thead>
+          <tbody>
+            @for (frequentWord of this.Result()!.top_frequent_words; track $index) {
+              <tr>
+                <td>{{frequentWord.mot}}</td>
+                <td>{{frequentWord.term_frequency}}</td>
+                <td>{{frequentWord.document_frequency}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </app-stat-card>
+    </div>
+  }
+
+</main>

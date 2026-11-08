@@ -1,0 +1,18 @@
+@if(!loaderService.IsLoading()){
+  <section class="search-result-container">
+      <app-search-bar></app-search-bar>
+      <div class="results">
+      @for (result of this.Result()?.result; track result.id) {
+          <div class="single-result">
+            <h3 class="title"><a [href]="result.url">{{result.titre}}</a></h3>
+            <p class="author">{{result.auteur}}</p>
+            <p class="description">{{result.texte.substring(0, 200)}}...</p>
+            <span class="source">Source : {{result.origine}}</span>
+          </div>
+      } @empty {
+        <h3>Oops, il semblerait que la liste soit vide... Réessayez une nouvelle recherche !</h3>
+      }
+      </div>
+  </section>
+
+}

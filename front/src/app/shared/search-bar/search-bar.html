@@ -1,0 +1,4 @@
+<div class="search-space">
+  <input class="search-bar" type="text" placeholder="Rechercher..." [(ngModel)]="Value" (keydown)="this.onClickEnter($event, Value)">
+  <ng-icon (click)="this.sendData(Value)" class="search-icon" name="lucideSearch"></ng-icon>
+</div>
