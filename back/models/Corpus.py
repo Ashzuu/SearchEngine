@@ -225,15 +225,6 @@ class Corpus:
         Affiche les statistiques globales du corpus.
         """
         tableau = self.freq
-        total_mots = len(tableau)
-
-        print("=== Statistiques du Corpus ===")
-        print(f"Nombre de mots différents dans le corpus : {total_mots}")
-        print(f"\nLes {n} mots les plus fréquents :")
-        premiers_mots = tableau.head(n)
-        print(premiers_mots)
-        print("================================")
-
         return tableau
 
     def __repr__(self) -> str:
